@@ -21,9 +21,7 @@
   },
   "customizations": {
     "vscode": {
-      "extensions": [
-        "yzhang.markdown-all-in-one"
-      ]
+      "extensions": ["yzhang.markdown-all-in-one"]
     }
   }
 }

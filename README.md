@@ -2,6 +2,6 @@
 
 ### Tools
 
-|Utility | Description | 
-| --- | --- |
-| launch | launch a new token |
+| Utility | Description        |
+| ------- | ------------------ |
+| launch  | launch a new token |
