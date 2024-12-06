@@ -1,0 +1,31 @@
+{
+  "name": "chicken_pools_cli",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf build",
+    "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint src/**/*.ts",
+    "prettier:fix": "prettier --write .",
+    "prettier:check": "prettier --check .",
+    "launch": "ts-node src/launch_eth.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^9.16.0",
+    "globals": "^15.13.0",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.17.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "eslint": "^9.16.0",
+    "ethers": "^6.13.4",
+    "prettier": "^3.4.2",
+    "ts-node": "^10.9.2"
+  }
+}
