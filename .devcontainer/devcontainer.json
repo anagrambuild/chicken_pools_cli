@@ -18,5 +18,12 @@
     "HOLESKY_URL": "${localEnv:HOLESKY_URL}",
     "ETHERSCAN_API_KEY": "${localEnv:ETHERSCAN_API_KEY}",
     "ARBISCAN_API_KEY": "${localEnv:ARBISCAN_API_KEY}"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "yzhang.markdown-all-in-one"
+      ]
+    }
   }
 }
