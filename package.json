@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "chicken": "node dist/main.js",
+    "breeze": "node dist/main.js",
     "clean": "rm -rf build",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint src/**/*.ts",
-    "prettier:fix": "prettier --write .",
-    "prettier:check": "prettier --check .",
-    "launch": "ts-node src/launch_eth.ts",
+    "prettier:fix": "prettier --write src/**/*.{ts,json}",
+    "prettier:check": "prettier --check src/**/*.{ts,json}",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -29,5 +28,6 @@
     "ethers": "^6.13.4",
     "prettier": "^3.4.2",
     "ts-node": "^10.9.2",
+    "yargs": "^17.2.1"
   }
 }

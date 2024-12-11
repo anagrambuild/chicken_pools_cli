@@ -45,7 +45,7 @@
   },
   {
     "type": "function",
-    "name": "MINIMUM_DEPOSIT_AMOUNT",
+    "name": "MINIMUM_BUY_IN",
     "inputs": [],
     "outputs": [
       {
@@ -58,7 +58,20 @@
   },
   {
     "type": "function",
-    "name": "MINIMUM_REWARD_AMOUNT",
+    "name": "MINIMUM_PROTOCOL_FEE",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "MINIMUM_SLASHING_PERCENT",
     "inputs": [],
     "outputs": [
       {
@@ -121,25 +134,6 @@
   },
   {
     "type": "function",
-    "name": "balance",
-    "inputs": [
-      {
-        "name": "_chickenId",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
     "name": "chickenCount",
     "inputs": [],
     "outputs": [
@@ -168,27 +162,12 @@
         "internalType": "address"
       },
       {
-        "name": "start",
+        "name": "buyIn",
         "type": "uint256",
         "internalType": "uint256"
       },
       {
-        "name": "end",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
-        "name": "rewardAmount",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
-        "name": "rewardDistributed",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
-        "name": "claimCount",
+        "name": "slashingPercent",
         "type": "uint256",
         "internalType": "uint256"
       },
@@ -198,9 +177,19 @@
         "internalType": "uint256"
       },
       {
-        "name": "minimumDeposit",
+        "name": "rewardQuantity",
         "type": "uint256",
         "internalType": "uint256"
+      },
+      {
+        "name": "protocolFee",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "gameStatus",
+        "type": "uint8",
+        "internalType": "enum PlayChicken.ChickenState"
       }
     ],
     "stateMutability": "view"
@@ -364,7 +353,7 @@
         "internalType": "uint256"
       },
       {
-        "name": "_depositAmount",
+        "name": "_deposit",
         "type": "uint256",
         "internalType": "uint256"
       }
@@ -394,7 +383,7 @@
   },
   {
     "type": "function",
-    "name": "protocolFee",
+    "name": "protocolFeeBps",
     "inputs": [],
     "outputs": [
       {
@@ -464,22 +453,12 @@
         "internalType": "address"
       },
       {
-        "name": "_start",
+        "name": "_buyIn",
         "type": "uint256",
         "internalType": "uint256"
       },
       {
-        "name": "_end",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
-        "name": "_rewardAmount",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
-        "name": "_minimumDeposit",
+        "name": "_slashingPercent",
         "type": "uint256",
         "internalType": "uint256"
       }
@@ -569,34 +548,22 @@
         "internalType": "uint256"
       },
       {
-        "name": "start",
-        "type": "uint256",
-        "indexed": false,
-        "internalType": "uint256"
-      },
-      {
-        "name": "end",
-        "type": "uint256",
-        "indexed": false,
-        "internalType": "uint256"
-      },
-      {
-        "name": "reward",
-        "type": "uint256",
-        "indexed": false,
-        "internalType": "uint256"
-      },
-      {
         "name": "token",
         "type": "address",
         "indexed": false,
         "internalType": "address"
       },
       {
-        "name": "createdBy",
-        "type": "address",
+        "name": "buyIn",
+        "type": "uint256",
         "indexed": false,
-        "internalType": "address"
+        "internalType": "uint256"
+      },
+      {
+        "name": "slashingPercent",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
       }
     ],
     "anonymous": false
@@ -629,56 +596,6 @@
   },
   {
     "type": "event",
-    "name": "PlayerChickendOut",
-    "inputs": [
-      {
-        "name": "chickenId",
-        "type": "uint256",
-        "indexed": false,
-        "internalType": "uint256"
-      },
-      {
-        "name": "player",
-        "type": "address",
-        "indexed": false,
-        "internalType": "address"
-      },
-      {
-        "name": "amount",
-        "type": "uint256",
-        "indexed": false,
-        "internalType": "uint256"
-      }
-    ],
-    "anonymous": false
-  },
-  {
-    "type": "event",
-    "name": "PlayerClaimedReward",
-    "inputs": [
-      {
-        "name": "chickenId",
-        "type": "uint256",
-        "indexed": false,
-        "internalType": "uint256"
-      },
-      {
-        "name": "player",
-        "type": "address",
-        "indexed": false,
-        "internalType": "address"
-      },
-      {
-        "name": "reward",
-        "type": "uint256",
-        "indexed": false,
-        "internalType": "uint256"
-      }
-    ],
-    "anonymous": false
-  },
-  {
-    "type": "event",
     "name": "PlayerJoined",
     "inputs": [
       {
@@ -694,7 +611,7 @@
         "internalType": "address"
       },
       {
-        "name": "totalDeposits",
+        "name": "totalDeposit",
         "type": "uint256",
         "indexed": false,
         "internalType": "uint256"
@@ -845,17 +762,6 @@
   },
   {
     "type": "error",
-    "name": "ChickenDepositNotAuthorized",
-    "inputs": [
-      {
-        "name": "_minimum",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "error",
     "name": "ChickenFinished",
     "inputs": []
   },
@@ -864,43 +770,11 @@
     "name": "ChickenIdInvalid",
     "inputs": [
       {
-        "name": "_chickenId",
+        "name": "chickenId",
         "type": "uint256",
         "internalType": "uint256"
       }
     ]
-  },
-  {
-    "type": "error",
-    "name": "ChickenMinimumDepositMustBeLarger",
-    "inputs": [
-      {
-        "name": "_minimum",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "error",
-    "name": "ChickenMinimumDepositNotMet",
-    "inputs": [
-      {
-        "name": "_minimum",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "error",
-    "name": "ChickenMustEndInFuture",
-    "inputs": []
-  },
-  {
-    "type": "error",
-    "name": "ChickenMustStartInFuture",
-    "inputs": []
   },
   {
     "type": "error",
@@ -909,40 +783,14 @@
   },
   {
     "type": "error",
-    "name": "ChickenRewardAndProtocolFeeNotMet",
+    "name": "DepositNotAuthorized",
     "inputs": [
       {
-        "name": "requiredReward",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
-        "name": "protocolFee",
+        "name": "minimumDeposit",
         "type": "uint256",
         "internalType": "uint256"
       }
     ]
-  },
-  {
-    "type": "error",
-    "name": "ChickenRewardMustBeGreaterThanMinimum",
-    "inputs": [
-      {
-        "name": "_minimum",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ]
-  },
-  {
-    "type": "error",
-    "name": "ChickenRunning",
-    "inputs": []
-  },
-  {
-    "type": "error",
-    "name": "ChickenStartAndEndMustBeDifferent",
-    "inputs": []
   },
   {
     "type": "error",
@@ -956,7 +804,27 @@
   },
   {
     "type": "error",
+    "name": "InsufficientBuyIn",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InsufficientFunds",
+    "inputs": []
+  },
+  {
+    "type": "error",
     "name": "InvalidInitialization",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "MinimumBuyInRequired",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "MinimumSlashingPercentRequired",
     "inputs": []
   },
   {
@@ -977,6 +845,16 @@
   },
   {
     "type": "error",
+    "name": "PlayerIsWinner",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "ProtocolFeeTooLow",
+    "inputs": []
+  },
+  {
+    "type": "error",
     "name": "ReentrancyGuardReentrantCall",
     "inputs": []
   },
@@ -990,5 +868,15 @@
         "internalType": "address"
       }
     ]
+  },
+  {
+    "type": "error",
+    "name": "TokenInvalid",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "WaitForGameStart",
+    "inputs": []
   }
 ]

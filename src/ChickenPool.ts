@@ -1,11 +1,11 @@
 import { ethers } from 'ethers';
 
-import RewardPoolAbi from './abi/RewardChicken.json';
+import ChickenPoolAbi from './abi/PlayChicken.json';
 
-const REWARD_POOL_ADDRESS = '0xf31799A6893EE2508B2b12eab12b9146B074A5f3';
+const CHICKEN_POOL_ADDRESS = '0x9ee040266605a8b0b65d859cfa6e2b7d5f34c163';
 const CONFIRMS = 3;
 
-export class RewardPool {
+export class ChickenPool {
   rpcUrl: string;
   wallet: ethers.Wallet;
   provider: ethers.JsonRpcProvider;
@@ -15,19 +15,13 @@ export class RewardPool {
     this.rpcUrl = rpcUrl;
     this.wallet = wallet;
     this.provider = provider;
-    this.contract = new ethers.Contract(REWARD_POOL_ADDRESS, RewardPoolAbi, wallet);
+    this.contract = new ethers.Contract(CHICKEN_POOL_ADDRESS, ChickenPoolAbi, wallet);
   }
 
-  // function start(address _token, uint256 _start, uint256 _end, uint256 _rewardAmount, uint256 _minimumDeposit)
-  async start(token: string, start: number, end: number, rewardAmount: number, minimumDeposit: number): Promise<void> {
-    const currentBlock = await this.provider.getBlockNumber();
-    const rewardInWei = ethers.parseEther(rewardAmount.toString());
-    const minimumDepositInWei = ethers.parseEther(minimumDeposit.toString());
-    const startBlock = currentBlock + start;
-    const endBlock = startBlock + end;
-    console.log(`Start block: ${startBlock}`);
-    console.log(`End block: ${endBlock}`);
-    const tx = await this.contract.start(token, startBlock, endBlock, rewardInWei, minimumDepositInWei);
+  // function start(address _token, uint256 _buyIn, uint256 _slashingPercent) external whenNotPaused nonReentrant {
+  async start(token: string, buyIn: number, slashingPercent: number): Promise<void> {
+    const buyInInWei = ethers.parseEther(buyIn.toString());
+    const tx = await this.contract.start(token, buyInInWei, slashingPercent);
     console.log(`Transaction hash: ${tx.hash}`);
   }
 
@@ -59,6 +53,6 @@ export class RewardPool {
   }
 
   getAddress(): string {
-    return REWARD_POOL_ADDRESS;
+    return CHICKEN_POOL_ADDRESS;
   }
 }
